@@ -16,7 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from haikus import views as haiku_views
 
 urlpatterns = [
+    path('haikus/', haiku_views.haikus, name='haikus'),
     path('admin/', admin.site.urls),
 ]
