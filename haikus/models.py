@@ -6,6 +6,7 @@ class Tag(models.Model):
     """
     Defines tag (category) object
     """
+
     tagname = models.CharField(max_length=80)
 
     def __str__(self):
@@ -17,19 +18,40 @@ class Haiku(models.Model):
     """
     Defines Haiku object
     """
+
     title = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(max_length=100, unique=True)
     author = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name="haiku_entries")
+        User, on_delete=models.CASCADE, related_name="haiku_entries"
+    )
     content = models.TextField()
     create_date = models.DateField(auto_now_add=True)
-    likes = models.ManyToManyField(
-        User, related_name='haiku_like', blank=True)
+    likes = models.ManyToManyField(User, related_name="haiku_like", blank=True)
     tag = models.ForeignKey(
-        Tag, on_delete=models.PROTECT, default=1, related_name="tag")
+        Tag, on_delete=models.PROTECT, default=1, related_name="tag"
+    )
 
     class Meta:
-        ordering = ['-create_date']
+        ordering = ["-create_date"]
 
     def __str__(self):
         return self.title
+
+
+# Source: https://github.com/Code-Institute-Solutions/Django3blog/blob/master/11_messages/blog/models.py#:~:text=class%20Comment(,name%7D%22  # noqa
+class Tanka(models.Model):
+    """
+    Defines Tanka object
+    """
+
+    post = models.ForeignKey(Haiku, on_delete=models.CASCADE, related_name="tankas")
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="extender")
+    body = models.TextField()
+    create_date = models.DateField(auto_now_add=True)
+    approved = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["-create_date"]
+
+    def __str__(self):
+        return f"{self.author} made this into a tanka: {self.body}"
