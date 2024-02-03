@@ -31,7 +31,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "8000-kayddggxh-woohoohaikuv1-pl8slbwxl7u.ws-eu107.gitpod.io",
+    ".gitpod.io",
     ".herokuapp.com",
 ]
 
@@ -63,7 +63,9 @@ ROOT_URLCONF = "woohoo_haiku.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [
+            os.path.join(BASE_DIR, 'templates'),
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [

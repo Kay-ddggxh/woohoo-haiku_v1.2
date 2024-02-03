@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Haikus list</h1>
+{% for haiku in object_list %}
+<h2>{{haiku.title}}</h2>
+<p>{{haiku.content}}</p>
+<p>Author: {{haiku.author}}</p>
+{% endfor %}
+
+{% endblock %}

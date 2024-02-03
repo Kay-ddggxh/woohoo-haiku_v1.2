@@ -1,6 +1,12 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.views import generic
+
+from .models import Haiku
 
 
-def haikus(request):
-    return HttpResponse("Hello Haikus!")
+class HaikuList(generic.ListView):
+    """
+    Renders all objects of Haiku model as list
+    """
+    queryset = Haiku.objects.all()
+    template_name = "haikus/index.html"

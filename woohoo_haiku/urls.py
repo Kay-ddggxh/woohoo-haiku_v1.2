@@ -16,10 +16,10 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
-from haikus import views as haiku_views
+from django.urls import path, include
+
 
 urlpatterns = [
-    path("haikus/", haiku_views.haikus, name="haikus"),
+    path("", include('haikus.urls'), name="haikus-urls"),
     path("admin/", admin.site.urls),
 ]
