@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Read <br>"{{ haiku.title }}"</h2>
+<!-- Haiku content -->
+<p class="tag-label fw-bold">{{ haiku.tag }}</p>
+<p>by {{ haiku.author }}</p>
+<div class="haiku-content">{{ haiku.content | safe | linebreaks }}
+    <!-- Like functionality -->
+    <div class="like-haiku">
+        {% if user.is_authenticated %}
+        <!-- Like Form goes here -->
+        {% else %}
+        <span>
+            <iconify-icon inline icon="emojione-monotone:cherry-blossom"></iconify-icon>
+        </span>
+        {% endif %}
+        <span class="likes-number">Likes counter</span>
+        <span class="tankas-num">
+            <iconify-icon inline icon="uil:comment-image" style="color: #ff506e;" width="20"></iconify-icon>
+            Tanka counter
+        </span>
+    </div>
+
+</div>
+
+<!-- Edit/Delete haiku functionality -->
+{% if user.id == haiku.author.id %}
+<div class="update-btn-group">
+    <a href="" class="edit-btn" role="button">Edit</a>
+    <a href="" class="delete-btn" role="button">Delete</a>
+</div>
+{% endif %}
+
+<!-- Already added tanka extensions -->
+<p class="h3 my-4">See how other people continued this poem</p>
+<!-- Tanka display goes here -->
+
+
+{% if user.is_authenticated %}
+
+<!-- Tanka submission form -->
+<p class="h3 mt-5 mb-4">Add a tanka extension</p>
+<p class="intro-text mb-4">
+    Turning a haiku into a tanka is easy.<br>
+    Simply add two more lines of 7 syllables each.<br>
+    However, there is a challenge. Your extension has to match the theme and general mood
+    of the existing haiku. This can prove difficult as haikus are often somewhat cryptic and
+    and the subject might only be clear to the author.<br>
+    But therein lies the fun.<br>
+    So give it a try!
+</p>
+<!-- Tanka submission form goes here -->
+
+{% endif %}
+
+{% endblock %}
