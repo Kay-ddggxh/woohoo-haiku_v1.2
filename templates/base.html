@@ -25,6 +25,9 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
             integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 
+        <!-- Custom CSS -->
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
         <title>Woohoo Haiku</title>
     </head>
 
@@ -32,7 +35,8 @@
         <!-- Navigation -->
         <nav class="navbar navbar-expand-lg container-fluid">
             <div class="container-fluid">
-                <a class="navbar-brand logo-link" href="{% url 'home' %}"><img class="logo" src=""
+                <a class="navbar-brand logo-link" href="{% url 'home' %}"><img class="logo"
+                        src="https://res.cloudinary.com/kay-ddggxh/image/upload/v1670946753/woohoo_haiku/images/koi-logo-small.jpg"
                         alt="koi fish icon"></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false"
