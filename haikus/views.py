@@ -10,3 +10,4 @@ class HaikuList(generic.ListView):
     """
     queryset = Haiku.objects.order_by('-create_date')
     template_name = "haikus/index.html"
+    paginate_by = 6

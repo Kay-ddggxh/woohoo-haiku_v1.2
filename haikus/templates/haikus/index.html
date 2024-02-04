@@ -1,12 +1,78 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div class="container-fluid intro-text">
+    <p class="mb-5">
+        Do you like poetry and playing with words? Do you enjoy crafting
+        images via verbal means? Then this little site is for you. <br>
+        Here you can write your own haikus, read other's and even join in their creative process by
+        extending their haikus into a tanka in a call-and-response fashion. Just
+        {% if user.is_authenticated %}
+        Sign Up
+        {% else %}
+        <a href="">Sign Up</a>
+        {% endif %}
+        and you're good to go.<br>
+        Not familiar with haikus and tanka formats? No worries. Once you're logged in you can head over to the
+        {% if user.is_authenticated %}
+        <a href="">Create page</a>
+        {% else %}Create page
+        {% endif %} where you'll find simple instructions.<br>
+        Happy writing!
+    </p>
+</div>
 
-<h1>Haikus list</h1>
-{% for haiku in object_list %}
-<h2>{{haiku.title}}</h2>
-<p>{{haiku.content}}</p>
-<p>Author: {{haiku.author}}</p>
-{% endfor %}
+<h2>Browse Haikus</h2>
+
+<!-- Btn group to filter haikus by tag -->
+<p>Filter haikus by tagname:</p>
+<div class="container-fluid filter-btn-group">
+    <a href="{% url 'home' %}" role="button" class="tag-link">All haikus</a>
+    <!-- for loop to create tag btns goes here -->
+</div>
+
+<!-- Haiku listing -->
+<div class="container-fluid">
+    <div class="row d-flex justify-content-evenly">
+        {% for haiku in haiku_list %}
+        <div class="col-md-5 p-3 m-3 haiku-card">
+            <a href="" class="haiku-card_link">
+                <h3>
+                    {{ haiku.title }}
+                </h3>
+                <div class="d-flex justify-content-around">
+                    <div class="author">by {{ haiku.author }}</div>
+                    <div class="tag-label fw-bold">{{ haiku.tag }}</div>
+                </div>
+            </a>
+            <div class="likes-tankas-numbers mt-2">
+                <span class="likes-num">{{ haiku.number_of_likes }}
+                    <iconify-icon inline icon="emojione:cherry-blossom"></iconify-icon>
+                </span>
+                <span class="tankas-num">
+                    {{ haiku.approved_tankas.count }}
+                    <iconify-icon inline icon="uil:comment-image" style="color: #ff506e;"></iconify-icon>
+                </span>
+
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if is_paginated %}
+    <nav aria-label="Page navigation" class="page-nav">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+            <li><a href="?page={{ page_obj.previous_page_number }}" class="page-link">&laquo; PREV </a></li>
+            {% endif %}
+            {% if page_obj.has_next %}
+            <li><a href="?page={{ page_obj.next_page_number }}" class="page-link"> NEXT &raquo;</a></li>
+
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+</div>
 
 {% endblock %}
