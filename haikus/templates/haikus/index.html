@@ -28,7 +28,11 @@
 <p>Filter haikus by tagname:</p>
 <div class="container-fluid filter-btn-group">
     <a href="{% url 'home' %}" role="button" class="tag-link">All haikus</a>
-    <!-- for loop to create tag btns goes here -->
+    {% for item in tag_items %}
+    <a href="" role="button" class="tag-link">
+        {{ item }}
+    </a>
+    {% endfor %}
 </div>
 
 <!-- Haiku listing -->
