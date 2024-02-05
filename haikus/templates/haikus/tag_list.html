@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+{% load crispy_forms_tags %}
+
+<p>Read all haikus tagged with</p>
+<h2>"{{ tag }}"</h2>
+
+<div class="container-fluid">
+    <div class="row d-flex justify-content-evenly">
+        {% if tag_haikus.count == 0 %}
+        <p>There are no haikus tagged with "{{ tag }}" yet.<br>
+            Maybe you could change that...?
+        </p>
+        {% else %}
+        {% for haiku in tag_haikus %}
+        <div class="col-md-5 p-3 m-3 haiku-card">
+            <a href="{% url 'haiku_detail' haiku.slug %}" class="haiku-card_link">
+                <h3>
+                    {{ haiku.title }}
+                </h3>
+                <div class="d-flex justify-content-around">
+                    <div class="author">by {{ haiku.author }}</div>
+                    <div class="tag-label fw-bold">{{ haiku.tag }}</div>
+                </div>
+            </a>
+            <div class="likes-tankas-numbers mt-2">
+                <span class="likes-num">{{ haiku.number_of_likes }}
+                    <iconify-icon inline icon="emojione:cherry-blossom"></iconify-icon>
+                </span>
+                <span class="tankas-num">
+
+                    {{ haiku.approved_tankas.count }}
+
+                    <iconify-icon inline icon="uil:comment-image" style="color: #ff506e;"></iconify-icon>
+
+                </span>
+
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
+<a href="{% url 'home' %}" class="back-btn">Back</a>
+
+{% endblock %}

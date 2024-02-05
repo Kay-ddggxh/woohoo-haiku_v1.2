@@ -146,3 +146,16 @@ class DeleteHaiku(DeleteView):
     def delete(self, request, *args, **kwargs):
         # add success message handling here!
         return super(DeleteView, self).delete(request, *args, **kwargs)
+
+
+class TagList(View):
+    """
+    View to filter haikus by specific tags
+    """
+
+    def get(self, request, tag):
+        tag_haikus = Haiku.objects.filter(tag__tagname=self.kwargs["tag"])
+
+        return render(
+            request, "haikus/tag_list.html", {"tag": tag, "tag_haikus": tag_haikus}
+        )
