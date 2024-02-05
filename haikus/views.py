@@ -61,8 +61,9 @@ class HaikuDetail(View):
             tanka.post = haiku
             tanka.author = request.user
             tanka.save()
+            tanka_form = TankaForm() # Initialize a new form instance
         else:
-            tanka_form = TankaForm()
+            tanka_form = TankaForm(data=request.POST) # reinitialize with posted data
 
         return render(
             request,
