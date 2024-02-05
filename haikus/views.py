@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic, View
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 
@@ -110,3 +110,20 @@ class CreateHaiku(CreateView):
         form.instance.author = self.request.user
         # add success message handling here!
         return super(CreateView, self).form_valid(form)
+
+
+class UpdateHaiku(UpdateView):
+    """
+    Allows authenticated users to update
+    already submitted haikus
+    """
+    model = Haiku
+    form_class = HaikuForm
+    template_name = 'haikus/update_haiku.html'
+    success_url = reverse_lazy('home')
+
+    # Source: https://stackoverflow.com/a/67366233
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        # add success message handling here!
+        return super(UpdateView, self).form_valid(form)
