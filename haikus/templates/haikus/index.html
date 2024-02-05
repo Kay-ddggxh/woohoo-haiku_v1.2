@@ -15,7 +15,7 @@
         and you're good to go.<br>
         Not familiar with haikus and tanka formats? No worries. Once you're logged in you can head over to the
         {% if user.is_authenticated %}
-        <a href="">Create page</a>
+        <a href="{% url 'create_haiku' %}">Create page</a>
         {% else %}Create page
         {% endif %} where you'll find simple instructions.<br>
         Happy writing!

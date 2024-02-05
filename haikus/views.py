@@ -1,9 +1,11 @@
 from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic, View
+from django.views.generic.edit import CreateView
 from django.http import HttpResponseRedirect
+from django.urls import reverse_lazy
 
 from .models import Haiku, Tag, Tanka
-from .forms import TankaForm
+from .forms import TankaForm, HaikuForm
 
 
 class HaikuList(generic.ListView):
@@ -92,3 +94,19 @@ class HaikuLike(View):
             haiku.likes.add(request.user)
 
         return HttpResponseRedirect(reverse("haiku_detail", args=[slug]))
+
+
+class CreateHaiku(CreateView):
+    """
+    Allows authenticated users to add
+    and save haikus
+    """
+    model = Haiku
+    form_class = HaikuForm
+    template_name = 'haikus/create_haiku.html'
+    success_url = reverse_lazy('home')
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        # add success message handling here!
+        return super(CreateView, self).form_valid(form)

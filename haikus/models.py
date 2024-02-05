@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.template.defaultfilters import slugify
 
 
 class Tag(models.Model):
@@ -42,6 +43,14 @@ class Haiku(models.Model):
         helper method to return total num of likes on post
         """
         return self.likes.count()
+
+    def save(self, *args, **kwargs):
+        """
+        helper method to generate slug for haikus submitted
+        by non-admin users
+        """
+        self.slug = slugify(self.title)
+        super(Haiku, self).save(*args, **kwargs)
 
 
 # Source: https://github.com/Code-Institute-Solutions/Django3blog/blob/master/11_messages/blog/models.py#:~:text=class%20Comment(,name%7D%22  # noqa
