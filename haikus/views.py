@@ -57,17 +57,16 @@ class HaikuDetail(View):
         tanka_form = TankaForm(data=request.POST)
 
         if tanka_form.is_valid():
-            tanka_form.instance.email = request.user.email
-            tanka_form.instance.name = request.user.username
             tanka = tanka_form.save(commit=False)
             tanka.post = haiku
+            tanka.author = request.user
             tanka.save()
         else:
             tanka_form = TankaForm()
 
         return render(
             request,
-            "haiku_detail.html",
+            "haikus/haiku_detail.html",
             {
                 "haiku": haiku,
                 "tankas": tankas,
