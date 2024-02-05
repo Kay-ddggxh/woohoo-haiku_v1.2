@@ -37,6 +37,12 @@ class Haiku(models.Model):
     def __str__(self):
         return self.title
 
+    def number_of_likes(self):
+        """
+        helper method to return total num of likes on post
+        """
+        return self.likes.count()
+
 
 # Source: https://github.com/Code-Institute-Solutions/Django3blog/blob/master/11_messages/blog/models.py#:~:text=class%20Comment(,name%7D%22  # noqa
 class Tanka(models.Model):
