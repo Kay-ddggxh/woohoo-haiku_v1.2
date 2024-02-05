@@ -47,7 +47,20 @@
 
 <!-- Already added tanka extensions -->
 <p class="h3 my-4">See how other people continued this poem</p>
-<!-- Tanka display goes here -->
+{% if haiku.approved_tankas.count == 0 %}
+<p>Nobody has extended this haiku yet.</p>
+{% else %}
+{% for tanka in tankas %}
+{% if tanka.approved %}
+<div class="tanka">
+    {{ tanka.body | safe | linebreaks }}
+    <div class="tanka-author">
+        by {{ tanka.author }}
+    </div>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
 
 
 {% if user.is_authenticated %}
