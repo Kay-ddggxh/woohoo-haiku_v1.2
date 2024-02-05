@@ -10,13 +10,24 @@
     <!-- Like functionality -->
     <div class="like-haiku">
         {% if user.is_authenticated %}
-        <!-- Like Form goes here -->
+        <form class="like-form" action="{% url 'haiku_like' haiku.slug %}" method="post">
+            {% csrf_token %}
+            {% if liked %}
+            <button type="submit" name="haiku_id" value="{{ post.slug }}" class="like-btn" aria-label="like-button">
+                <iconify-icon inline icon="emojione:cherry-blossom"></iconify-icon>
+            </button>
+            {% else %}
+            <button type="submit" name="haiku_id" value="{{ post.slug }}" class="like-btn">
+                <iconify-icon inline icon="emojione-monotone:cherry-blossom"></iconify-icon>
+            </button>
+            {% endif %}
+        </form>
         {% else %}
         <span>
             <iconify-icon inline icon="emojione-monotone:cherry-blossom"></iconify-icon>
         </span>
         {% endif %}
-        <span class="likes-number">Likes counter</span>
+        <span class="likes-number">{{ haiku.number_of_likes }}</span>
         <span class="tankas-num">
             <iconify-icon inline icon="uil:comment-image" style="color: #ff506e;" width="20"></iconify-icon>
             Tanka counter

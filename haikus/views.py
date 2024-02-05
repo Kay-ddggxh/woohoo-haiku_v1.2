@@ -1,5 +1,6 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, reverse
 from django.views import generic, View
+from django.http import HttpResponseRedirect
 
 from .models import Haiku, Tag, Tanka
 
@@ -8,7 +9,8 @@ class HaikuList(generic.ListView):
     """
     Renders all objects of Haiku model as list
     """
-    queryset = Haiku.objects.order_by('-create_date')
+
+    queryset = Haiku.objects.order_by("-create_date")
     template_name = "haikus/index.html"
     paginate_by = 6
 
@@ -23,7 +25,7 @@ class HaikuDetail(View):
     def get(self, request, slug, *args, **kwargs):
         queryset = Haiku.objects
         haiku = get_object_or_404(queryset, slug=slug)
-        tankas = haiku.tankas.order_by('create_date')
+        tankas = haiku.tankas.order_by("create_date")
         liked = False
         if haiku.likes.filter(id=self.request.user.id).exists():
             liked = True
@@ -43,7 +45,7 @@ class HaikuDetail(View):
     def post(self, request, slug, *args, **kwargs):
         queryset = Haiku.objects
         haiku = get_object_or_404(queryset, slug=slug)
-        tankas = haiku.tankas.order_by('create_date')
+        tankas = haiku.tankas.order_by("create_date")
         liked = False
         if haiku.likes.filter(id=self.request.user.id).exists():
             liked = True
@@ -59,3 +61,19 @@ class HaikuDetail(View):
                 # add tanka form variable
             },
         )
+
+
+class HaikuLike(View):
+    """
+    Allows user to like/unlike haikus
+    """
+
+    def post(self, request, slug):
+        haiku = get_object_or_404(Haiku, slug=slug)
+
+        if haiku.likes.filter(id=request.user.id).exists():
+            haiku.likes.remove(request.user)
+        else:
+            haiku.likes.add(request.user)
+
+        return HttpResponseRedirect(reverse("haiku_detail", args=[slug]))

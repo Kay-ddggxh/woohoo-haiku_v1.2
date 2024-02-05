@@ -22,10 +22,10 @@ class HaikuAdmin(admin.ModelAdmin):
 
 @admin.register(Tanka)
 class TankaAdmin(admin.ModelAdmin):
-    list_display = ('author', 'post', 'approved')
-    search_fields = ['author']
-    list_filter = ('approved', 'create_date', 'post')
+    list_display = ("author", "post", "approved")
+    search_fields = ["author"]
+    list_filter = ("approved", "create_date", "post")
 
     class Meta:
         model = Tanka
-        fields = ('body',)
+        fields = ("body",)
