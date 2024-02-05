@@ -52,6 +52,12 @@ class Haiku(models.Model):
         self.slug = slugify(self.title)
         super(Haiku, self).save(*args, **kwargs)
 
+    def approved_tankas(self):
+        """
+        helper method to return number of approved tankas only
+        """
+        return self.tankas.filter(approved=True)
+
 
 # Source: https://github.com/Code-Institute-Solutions/Django3blog/blob/master/11_messages/blog/models.py#:~:text=class%20Comment(,name%7D%22  # noqa
 class Tanka(models.Model):
