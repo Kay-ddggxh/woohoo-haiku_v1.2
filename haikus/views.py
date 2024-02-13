@@ -166,3 +166,19 @@ class TagList(View):
         return render(
             request, "haikus/tag_list.html", {"tag": tag, "tag_haikus": tag_haikus}
         )
+
+
+class UserHaikus(generic.ListView):
+    """
+    Displays all haikus submitted only by
+    currently authenticated user
+    """
+
+    model = Haiku
+    template_name = "haikus/user_haikus.html"
+
+    def get_queryset(self):
+        queryset = Haiku.objects.filter(author__id=self.request.user.id).order_by(
+            "-create_date"
+        )
+        return queryset
