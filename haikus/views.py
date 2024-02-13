@@ -147,6 +147,7 @@ class DeleteHaiku(DeleteView):
     template_name = "haikus/delete_haiku.html"
     success_url = reverse_lazy("home")
 
+    # Source: https://stackoverflow.com/questions/24822509/success-message-in-deleteview-not-shown  # noqa
     def get_success_url(self):
         # ensures success messages is rendered on redirect page after successful deletion  # noqa
         msg = "Your haiku has been deleted"
