@@ -22,7 +22,6 @@
     </p>
 
     <!-- Haiku submission form -->
-    <!-- messages go here -->
     <form method="POST" class="haiku-form">
         {% csrf_token %}
         {{ form.as_p | safe }}

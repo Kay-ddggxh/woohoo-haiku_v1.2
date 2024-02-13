@@ -3,6 +3,7 @@ from django.views import generic, View
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
+from django.contrib import messages
 
 from .models import Haiku, Tag, Tanka
 from .forms import TankaForm, HaikuForm
@@ -108,9 +109,11 @@ class CreateHaiku(CreateView):
     template_name = "haikus/create_haiku.html"
     success_url = reverse_lazy("home")
 
+    # Source: https://stackoverflow.com/questions/67366138/django-display-message-after-creating-a-post # noqa
     def form_valid(self, form):
         form.instance.author = self.request.user
-        # add success message handling here!
+        msg = "Your haiku was submitted successfully"
+        messages.add_message(self.request, messages.SUCCESS, msg)
         return super(CreateView, self).form_valid(form)
 
 
@@ -126,9 +129,11 @@ class UpdateHaiku(UpdateView):
     success_url = reverse_lazy("home")
 
     # Source: https://stackoverflow.com/a/67366233
+    # Source: https://stackoverflow.com/questions/67366138/django-display-message-after-creating-a-post # noqa
     def form_valid(self, form):
         form.instance.author = self.request.user
-        # add success message handling here!
+        msg = "Your haiku has been updated successfully"
+        messages.add_message(self.request, messages.SUCCESS, msg)
         return super(UpdateView, self).form_valid(form)
 
 
@@ -142,10 +147,11 @@ class DeleteHaiku(DeleteView):
     template_name = "haikus/delete_haiku.html"
     success_url = reverse_lazy("home")
 
-    # Source: https://stackoverflow.com/a/25325228
-    def delete(self, request, *args, **kwargs):
-        # add success message handling here!
-        return super(DeleteView, self).delete(request, *args, **kwargs)
+    def get_success_url(self):
+        # ensures success messages is rendered on redirect page after successful deletion  # noqa
+        msg = "Your haiku has been deleted"
+        messages.add_message(self.request, messages.SUCCESS, msg)
+        return super(DeleteHaiku, self).get_success_url()
 
 
 class TagList(View):
