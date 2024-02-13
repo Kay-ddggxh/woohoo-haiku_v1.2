@@ -217,7 +217,7 @@ footer {
 }
 
 .auth-form>p>input {
-    margin: 0 0 0 1em;
+    margin: 0 3em 0 auto;
 }
 
 .auth-form,
