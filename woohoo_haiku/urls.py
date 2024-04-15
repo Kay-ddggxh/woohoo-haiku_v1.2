@@ -26,3 +26,4 @@ urlpatterns = [
 ]
 
 handler404 = "woohoo_haiku.views.handler404"
+handler500 = "woohoo_haiku.views.handler500"

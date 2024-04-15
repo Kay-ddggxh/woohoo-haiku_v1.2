@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="haiku-card d-block mx-auto py-2">
+    <p>
+        Error five hundred.<br>
+        A user is powerless.<br>
+        Please return back home.
+    </p>
+</div>
+<a href="{% url 'home' %}" class="back-btn">Back</a>
+
+{% endblock %}
