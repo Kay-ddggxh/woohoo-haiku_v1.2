@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="haiku-card d-block mx-auto py-2">
+    <p>
+        Error four oh four.<br>
+        So sorry to see you're lost.<br>
+        Button's got your back.
+    </p>
+</div>
+<a href="{% url 'home' %}" class="back-btn">Back</a>
+
+{% endblock %}

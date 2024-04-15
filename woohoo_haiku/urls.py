@@ -24,3 +24,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("haikus.urls"), name="haikus-urls"),
 ]
+
+handler404 = "woohoo_haiku.views.handler404"
